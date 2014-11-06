@@ -81,7 +81,7 @@ function rand_enqueue_scripts() {
     	if (!empty($default_proj_end_date)) {
     		// Hiding project end date field using jQuery
     		wp_register_script('rand-ide', plugins_url('js/rand-ide.js', __FILE__));
-    		wp_enqueue_script('jquery');
+    		// wp_enqueue_script('jquery');
     		wp_enqueue_script( 'rand-ide');
     		$default_proj_end_date = get_option( "ign_default_project_end_date" );
     		wp_localize_script('rand-ide', 'randEndDate', $default_proj_end_date);
@@ -89,4 +89,10 @@ function rand_enqueue_scripts() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'rand_enqueue_scripts' );
+
+function rand_fes_creation_actions($user_id, $project_id, $post_id, $proj_args, $saved_levels, $project_fund_type) {
+	// Publish the post directly in Rand plugin
+	wp_publish_post( $post_id );
+}
+add_action('ide_fes_create', 'rand_fes_creation_actions', 10, 6);
 ?>
