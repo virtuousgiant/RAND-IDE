@@ -81,7 +81,7 @@ function rand_enqueue_scripts() {
     	if (!empty($default_proj_end_date)) {
     		// Hiding project end date field using jQuery
     		wp_register_script('rand-ide', plugins_url('js/rand-ide.js', __FILE__));
-    		// wp_enqueue_script('jquery');
+    		wp_enqueue_script('jquery');
     		wp_enqueue_script( 'rand-ide');
     		$default_proj_end_date = get_option( "ign_default_project_end_date" );
     		wp_localize_script('rand-ide', 'randEndDate', $default_proj_end_date);
