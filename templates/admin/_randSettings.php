@@ -4,6 +4,7 @@
 			<div class="postbox">
 				<h3 class="hndle"><span><?php _e('Manage User Credits', 'randide') ?></span></h3>
 				<div class="inside">
+					<?php echo (isset($message) ? '<div id="message" class="updated">'.$message.'</div>' : ''); ?>
 					<form id="manage-credits" action="" method="post">
 						<p><?php _e('Manually add or remove credits from user accounts', 'randide') ?>.</p>
 						<div class="form-row">
