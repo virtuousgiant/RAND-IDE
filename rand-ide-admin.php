@@ -18,13 +18,23 @@ function rand_settings() {
 	$member = new ID_Member();
 	if (isset($_POST['rand_submit'])) {
 		// Getting all the allowed users whose credits could be added
-		$users = array_reverse($member->get_allowed_users());
+		$users = get_users(array('fields' => array('ID')));
+
+		//$users = array_reverse($member->get_allowed_users());
 		// Looping the users and updating their credits
 		foreach ($users as $user) {
-			ID_Member::add_credits($user->user_id, $_POST['user_credits']);
+			$match = $member->match_user($user->ID);
+			if (empty($match)) {
+				$user_args = array(
+					'user_id' => $user->ID,
+					'level' => array(),
+					'data' => array()
+				);
+				$new_user = ID_Member::add_user($user_args);
+			}
+			ID_Member::add_credits($user->ID, absint($_POST['user_credits']));
 		}
-
-		echo '<div id="message" class="updated">'.__('Credits saved for all users', 'randide').'</div>';
+		$message = absint($_POST['user_credits']).' '._n('credit', 'credits', absint($_POST['user_credits']), 'randide').' '.__('added to all users', 'randide');
 	}
 
 	// Getting the option if stored before
